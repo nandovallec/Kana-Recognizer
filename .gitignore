@@ -2,8 +2,8 @@ salidas/
 
 venv/
 
-.jpg
+*.jpg
 
-.png
+*.png
 
 .idea/
