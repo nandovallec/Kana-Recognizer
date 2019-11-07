@@ -4,6 +4,9 @@ import os
 import cv2
 import random
 import pickle
+
+
+from PIL import Image, ImageEnhance, ImageFilter
 from tqdm import tqdm
 
 DATADIR = "D:\\Descargas Ant\\alcon2019\\dataset\\train\\imgs\\"
@@ -47,17 +50,25 @@ for r, d, f in os.walk(path):
                 label = TAGS.index(adding)
                 # if counter==3256:
                 n = os.path.join(r1,i)
-                img_array = cv2.imread(n, cv2.IMREAD_GRAYSCALE)
+                #img_array = cv2.imread(n, cv2.IMREAD_GRAYSCALE)
                 # img_array = img_array
                 # imgContrast = cv2.pow(img_array/255.0, 1.1)
                 # img_array = imgContrast
                 #
+
+                img = Image.open(n)
+                img = img.convert('L')  # Gray scale
+                n_img = ImageEnhance.Contrast(img).enhance(1.5)
+                img = n_img.filter(ImageFilter.RankFilter(3, 2))
+                img = img.resize((NEW_WIDTH, NEW_HEIGTH), Image.ANTIALIAS)
+
+                new_array = np.asanyarray(img)
                 # kernel = np.ones((4, 4), np.uint8)
-                img_array = adjust_gamma(img_array, 0.5)
+                #img_array = adjust_gamma(img_array, 0.5)
                 # imgMorph = cv2.erode(imgContrast, kernel, iterations=1)
                 # img_array = imgMorph
 
-                new_array = cv2.resize(img_array, (NEW_WIDTH, NEW_HEIGTH))
+                #new_array = cv2.resize(img_array, (NEW_WIDTH, NEW_HEIGTH))
                 training_data.append([new_array, label])
 
                 # plt.imshow(img_array, cmap='gray')  # graph it

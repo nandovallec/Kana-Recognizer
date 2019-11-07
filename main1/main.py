@@ -41,10 +41,8 @@ start = time.time()
 for i in range(N):
     # Prediction
     img,y_val = valdata[i]  # Get data
-    # print("aa")
     y_pred = myalg.predict(img)  # Prediction
-    # print("ss")
-    print(i)
+
     if(i%100 == 0):
         end = time.time()
         print('Prediction {}; GT {}; {}/{}'.format(

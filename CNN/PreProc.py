@@ -2,21 +2,25 @@ import numpy as np
 import cv2
 from PIL import Image, ImageEnhance, ImageFilter
 import os
-import image_slicer
 # read
 
-i = 8569
-path = "D:\\Descargas Ant\\alcon2019\\dataset\\train\\imgs\\"
-
-img = Image.open('D:\\Descargas Ant\\alcon2019\\dataset\\train\\imgs\\'+str(i)+'.jpg')
+######
+# How I split the three characters
+######
+name = "t2"
+script_dir = os.path.dirname(os.path.dirname(__file__))
+print(os.path.join(script_dir, str(name)+'.jpg'))
+img = Image.open(os.path.join(script_dir, str(name)+'.jpg'))
 img = img.convert('L')  # Gray scale
-ne_img = ImageEnhance.Contrast(img).enhance(2)
-img = ne_img.filter(ImageFilter.RankFilter(3, 1))
+
+img.save(script_dir+'/salidas/orig.jpg')
+ne_img = ImageEnhance.Contrast(img).enhance(1.5)
+img = ne_img.filter(ImageFilter.RankFilter(3, 2))
 
 img.show()
 res_img = img.resize((80,92*3),Image.ANTIALIAS)
-img.save('orig.jpg')
-res_img.save('resi.jpg')
+#img.save(script_dir+'/salidas/orig.jpg')
+res_img.save(script_dir+'/salidas/resi.jpg')
 img = res_img
 width, height = img.size
 
@@ -28,9 +32,9 @@ area = (0,0, width, height/3)
 img = (img.crop(area))
 
 
-img.save('1.jpg')
-img2.save('2.jpg')
-img3.save('3.jpg')
+img.save(script_dir+'/salidas/1.jpg')
+img2.save(script_dir+'/salidas/2.jpg')
+img3.save(script_dir+'/salidas/3.jpg')
 
 
 # img.show()

@@ -49,7 +49,7 @@ for i in range(N):
     y_pred = myalg.predict(img)  # Prediction
     # print("ss")
 
-    if(i%1 == 0):
+    if(i%100 == 0):
         end = time.time()
         print('Prediction {}; GT {}; {}/{}'.format(
             unicode_to_kana_list(y_pred),unicode_to_kana_list(y_val),i,N))

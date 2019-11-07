@@ -4,7 +4,6 @@ import os
 import numpy as np
 import cv2
 from PIL import ImageFilter, ImageEnhance, Image
-
 path = 'D:\\Descargas Ant\\alcon2019\\dataset\\train_kana\\'
 #files = [i for i in os.listdir("D:\\Descargas Ant\\alcon2019\\dataset\\rain_kana\\U+304A\\") if i.endswith("jpg")]
 # x = []

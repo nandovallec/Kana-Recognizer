@@ -14,6 +14,8 @@ import time
 import os
 from sklearn.preprocessing import LabelEncoder
 from keras.utils import to_categorical
+from sklearn.utils import class_weight
+
 
 import pickle
 
@@ -57,6 +59,8 @@ y = np_utils.to_categorical(y)
 # print(np.shape(w))
 # # print(np.shape(y))
 
+# Since the data set is imbalanced
+# class_weights = class_weight.compute_class_weight('balanced', np.unique(y), y)
 
 
 gpu_options = tf.GPUOptions(allow_growth=True)
@@ -115,5 +119,7 @@ for dense_layer in dense_layers:
                               optimizer='adam',
                               metrics=['acc'])
                 model.fit(X, y, batch_size=64, epochs=2, validation_split=0.2, callbacks = [tensorboard])
+                #model.fit(X, y, batch_size=64, epochs=2, validation_split=0.2, callbacks = [tensorboard]), class_weight=class_weight
+
 
 model.save('2.0T-256-1-128-1.model')

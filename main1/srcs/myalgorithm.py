@@ -20,23 +20,16 @@ class MyAlgorithm():
 
             # img = np.array(img.convert('L'))  # Gray scale
             img = img.convert('L') # Gray scale
-            # img.show()
-
-
             ne_img = ImageEnhance.Contrast(img).enhance(2)
             ers_img = ne_img.filter(ImageFilter.RankFilter(3, 1))
             img = np.array(ers_img)
 
-
-            # ne_img.show()
-            # ers_img.show()
 
 
             # opencvImage = cv2.cvtColor(np.array(img),cv2.IMREAD_GRAYSCALE)
             # pxmin = np.min(opencvImage)
             # pxmax = np.max(opencvImage)
             # imgContrast = ((opencvImage - pxmin) / (pxmax - pxmin)) * 500
-            #
             # kernel = np.ones((3, 3), np.uint8)
             # imgMorph = cv2.erode(imgContrast, kernel, iterations=2)
             # # imgMorph = np.array(imgMorph, dtype=float)/float(255)
@@ -48,17 +41,10 @@ class MyAlgorithm():
 
 
 
-            # print(np.array(img).shape)
-            # print(np.resize(img,512)/255)
             # model[i,:] = np.resize(img,512)  # feature vector
             model[i, :] = np.resize(img, tam_feature_vec)
-            #print(np.array(img).shape)
-            #print(len(model[i,:]))
-            #print(len(np.resize(img,512)))
+
             y_train[i] = codes
-            if i%1000 == 0:
-                print("Training ",i)
-            break
 
             
         # Keep model and labels    
@@ -75,10 +61,10 @@ class MyAlgorithm():
         img = np.array(ers_img)
 
         feat = np.resize(img,tam_feature_vec)  # feature vector
-        #print(len(feat))
-        # print("mmm")
-        dist = np.linalg.norm(self.model - feat, axis=1)  # measure distance
-        # dist = (np.sum(np.abs(self.model - feat) ** 2, axis=-1) ** (1. / 2))
-        # print("kkk")
+
+
+        dist = np.linalg.norm(self.model - feat, axis=1)  # measure distance --- Frobenius Norm / Euclidean norm
+        # dist = (np.sum(np.abs(self.model - feat) ** 2, axis=-1) ** (1. / 2))         SLOWER
+
         y_pred = self.y_train[ np.argmin(dist) ]  # Get the closest
         return y_pred
